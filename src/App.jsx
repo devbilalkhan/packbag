@@ -7,14 +7,22 @@ import Sidebar from "./components/Sidebar";
 import { defaultItems } from "./lib/constants";
 function App() {
   const [itemText, setItemText] = useState(defaultItems);
-
+  const handleAddItem = (newItemText) => {
+    const newItem = {
+      id: new Date().getTime(),
+      name: newItemText,
+      packed: false,
+    };
+    const newItems = [...itemText, newItem];
+    setItemText(newItems);
+  };
   return (
     <>
       <BackgroundHeader />
       <main>
         <Header numOfItems={itemText.length} />
         <ItemList itemText={itemText} setItemText={setItemText} />
-        <Sidebar setItemText={setItemText} />
+        <Sidebar setItemText={setItemText} handleAddItem={handleAddItem} />
       </main>
       <Footer />
     </>

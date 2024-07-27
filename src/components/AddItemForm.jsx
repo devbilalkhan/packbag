@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
 import Warning from "./Warning";
-export default function AddItemForm({ setItemText }) {
+export default function AddItemForm({ setItemText, handleAddItem }) {
   const [listItem, setListItem] = useState("");
   const [warning, setWarning] = useState("");
 
@@ -14,12 +14,8 @@ export default function AddItemForm({ setItemText }) {
       inputRef.current.focus();
       return;
     }
-    const newItem = {
-      id: new Date().getTime(),
-      name: listItem,
-      packed: false,
-    };
-    setItemText((prev) => [...prev, newItem]);
+    handleAddItem(listItem);
+    setListItem("");
   };
   return (
     <form onSubmit={handleFormSubmit}>
