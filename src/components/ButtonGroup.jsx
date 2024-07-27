@@ -1,11 +1,23 @@
 import Button from "./Button";
-import { sidebarButtonLabels } from "../lib/constants";
-export default function ButtonGroup() {
+
+export default function ButtonGroup({
+  onRemoveAllItems,
+  onResetToInitials,
+  onMarkAllComplete,
+  onMarkAllInComplete,
+}) {
+  const buttons = [
+    { onClick: onMarkAllComplete, label: "Mark all as complete" },
+    { onClick: onMarkAllInComplete, label: "Mark all as incomplete" },
+    { onClick: onResetToInitials, label: "Reset" },
+    { onClick: onRemoveAllItems, label: "Remove all items" },
+  ];
+
   return (
     <section className="button-group">
-      {sidebarButtonLabels.map((item) => (
-        <Button key={item.id} label={item.label} type="secondary">
-          {item.label}
+      {buttons.map(({ label, onClick }, index) => (
+        <Button key={index} buttonType="secondary" onClick={onClick}>
+          {label}
         </Button>
       ))}
     </section>

@@ -16,13 +16,62 @@ function App() {
     const newItems = [...itemText, newItem];
     setItemText(newItems);
   };
+
+  const handleMarkAllComplete = () => {
+    setItemText(
+      itemText.map((itm) => {
+        return { ...itm, packed: true };
+      })
+    );
+  };
+  const handleMarkAllInComplete = () => {
+    setItemText(
+      itemText.map((itm) => {
+        return { ...itm, packed: false };
+      })
+    );
+  };
+  const handleResetToInitials = () => {
+    setItemText(defaultItems);
+  };
+  const handleRemoveAllItems = () => {
+    setItemText([]);
+  };
+
+  const handleDeleteEachItem = (id) => {
+    setItemText((prev) => prev.filter((itm) => itm.id !== id));
+  };
+
+  const handleItemToggle = (id) => {
+    const newItems = itemText.map((itm) => {
+      if (itm.id === id) {
+        return {
+          ...itm,
+          packed: !itm.packed,
+        };
+      }
+      return itm;
+    });
+    setItemText(newItems);
+  };
   return (
     <>
       <BackgroundHeader />
       <main>
         <Header numOfItems={itemText.length} />
-        <ItemList itemText={itemText} setItemText={setItemText} />
-        <Sidebar setItemText={setItemText} handleAddItem={handleAddItem} />
+        <ItemList
+          itemText={itemText}
+          handleItemToggle={handleItemToggle}
+          handleDeleteEachItem={handleDeleteEachItem}
+        />
+        <Sidebar
+          setItemText={setItemText}
+          handleAddItem={handleAddItem}
+          handleRemoveAllItems={handleRemoveAllItems}
+          handleResetToInitials={handleResetToInitials}
+          handleMarkAllComplete={handleMarkAllComplete}
+          handleMarkAllInComplete={handleMarkAllInComplete}
+        />
       </main>
       <Footer />
     </>

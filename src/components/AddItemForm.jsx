@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
 import Warning from "./Warning";
-export default function AddItemForm({ setItemText, handleAddItem }) {
+export default function AddItemForm({ setItemText, onAddItem }) {
   const [listItem, setListItem] = useState("");
   const [warning, setWarning] = useState("");
 
@@ -14,7 +14,7 @@ export default function AddItemForm({ setItemText, handleAddItem }) {
       inputRef.current.focus();
       return;
     }
-    handleAddItem(listItem);
+    onAddItem(listItem);
     setListItem("");
   };
   return (

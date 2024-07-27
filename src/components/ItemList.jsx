@@ -1,17 +1,23 @@
-import { useState } from "react";
-
-export default function ItemList({ itemText, setItemText }) {
+export default function ItemList({
+  itemText,
+  handleDeleteEachItem,
+  handleItemToggle,
+}) {
   return (
     <ul>
       {itemText.map((item) => (
-        <ListItem key={item.id} item={item} setItemText={setItemText} />
+        <ListItem
+          key={item.id}
+          item={item}
+          onDeleteEachItem={handleDeleteEachItem}
+          onToggleItem={handleItemToggle}
+        />
       ))}
     </ul>
   );
 }
 
-function ListItem({ item, setItemText }) {
-  const [checked, setChecked] = useState(false);
+function ListItem({ item, onDeleteEachItem, onToggleItem }) {
   return (
     <>
       <li className="item">
@@ -20,17 +26,15 @@ function ListItem({ item, setItemText }) {
             type="checkbox"
             checked={item.packed}
             onChange={() => {
-              const newChecked = !checked;
-              setChecked(newChecked);
-              item.packed = newChecked;
+              onToggleItem(item.id);
             }}
           />
           {item.name}
         </label>
         <button
-          onClick={() =>
-            setItemText((prev) => prev.filter((itm) => itm.id !== item.id))
-          }
+          onClick={() => {
+            onDeleteEachItem(item.id);
+          }}
         >
           ❌
         </button>
