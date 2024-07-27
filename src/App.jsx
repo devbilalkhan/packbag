@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundHeader from "./components/BackgroundHeader";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -6,7 +6,11 @@ import ItemList from "./components/ItemList";
 import Sidebar from "./components/Sidebar";
 import { defaultItems } from "./lib/constants";
 function App() {
-  const [itemText, setItemText] = useState(defaultItems);
+  const itemsFromLocalStorage = JSON.parse(localStorage.getItem("items"));
+  const [itemText, setItemText] = useState(
+    () => itemsFromLocalStorage || defaultItems
+  );
+
   const handleAddItem = (newItemText) => {
     const newItem = {
       id: new Date().getTime(),
@@ -54,11 +58,22 @@ function App() {
     });
     setItemText(newItems);
   };
+
+  const handlePackedItems = () => {
+    return itemText.filter((itm) => itm.packed === true).length;
+  };
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(itemText));
+  }, [itemText]);
   return (
     <>
       <BackgroundHeader />
       <main>
-        <Header numOfItems={itemText.length} />
+        <Header
+          numOfItems={itemText.length}
+          handlePackedItemsTotal={handlePackedItems()}
+        />
         <ItemList
           itemText={itemText}
           handleItemToggle={handleItemToggle}
@@ -77,5 +92,4 @@ function App() {
     </>
   );
 }
-
 export default App;

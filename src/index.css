@@ -184,11 +184,12 @@ label > label {
 }
 
 .empty-state {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  height: 100%;
 }
 
 h3 {

@@ -1,8 +1,8 @@
-export default function Counter({ numOfItems, packedItems }) {
+export default function Counter({ numOfItems, onPackedItemsTotal }) {
   return (
     <div className="counter">
       <b>
-        {packedItems} / {numOfItems}
+        {onPackedItemsTotal} / {numOfItems}
       </b>{" "}
       items packed
     </div>
