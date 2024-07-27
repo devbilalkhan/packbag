@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function ItemList({ itemText, setItemText }) {
   return (
     <ul>
@@ -9,11 +11,20 @@ export default function ItemList({ itemText, setItemText }) {
 }
 
 function ListItem({ item, setItemText }) {
+  const [checked, setChecked] = useState(false);
   return (
     <>
       <li className="item">
         <label>
-          <input type="checkbox" checked={item.packed} onChange={() => {}} />
+          <input
+            type="checkbox"
+            checked={item.packed}
+            onChange={() => {
+              const newChecked = !checked;
+              setChecked(newChecked);
+              item.packed = newChecked;
+            }}
+          />
           {item.name}
         </label>
         <button

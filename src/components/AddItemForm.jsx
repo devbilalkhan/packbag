@@ -6,24 +6,23 @@ export default function AddItemForm({ setItemText }) {
   const [warning, setWarning] = useState("");
 
   const inputRef = useRef();
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
 
-        if (!listItem) {
-          setWarning("No items were entered!");
-          inputRef.current.focus();
-          return;
-        }
-        const newItem = {
-          id: new Date().getTime(),
-          name: listItem,
-          packed: false,
-        };
-        setItemText((prev) => [...prev, newItem]);
-      }}
-    >
+    if (!listItem) {
+      setWarning("No items were entered!");
+      inputRef.current.focus();
+      return;
+    }
+    const newItem = {
+      id: new Date().getTime(),
+      name: listItem,
+      packed: false,
+    };
+    setItemText((prev) => [...prev, newItem]);
+  };
+  return (
+    <form onSubmit={handleFormSubmit}>
       <h2>Add an item</h2>
       <input
         ref={inputRef}

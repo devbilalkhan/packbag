@@ -7,11 +7,12 @@ import Sidebar from "./components/Sidebar";
 import { defaultItems } from "./lib/constants";
 function App() {
   const [itemText, setItemText] = useState(defaultItems);
+
   return (
     <>
       <BackgroundHeader />
       <main>
-        <Header />
+        <Header numOfItems={itemText.length} />
         <ItemList itemText={itemText} setItemText={setItemText} />
         <Sidebar setItemText={setItemText} />
       </main>
