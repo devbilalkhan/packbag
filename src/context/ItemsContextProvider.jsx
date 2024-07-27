@@ -5,7 +5,7 @@ export const ItemContext = createContext();
 
 export default function ItemsContextProvider({ children }) {
   const itemsFromLocalStorage = JSON.parse(localStorage.getItem("items"));
-  const [itemText, setItemText] = useState(
+  const [items, setItems] = useState(
     () => itemsFromLocalStorage || defaultItems
   );
 
@@ -15,37 +15,37 @@ export default function ItemsContextProvider({ children }) {
       name: newItemText,
       packed: false,
     };
-    const newItems = [...itemText, newItem];
-    setItemText(newItems);
+    const newItems = [...items, newItem];
+    setItems(newItems);
   };
 
   const handleMarkAllComplete = () => {
-    setItemText(
-      itemText.map((itm) => {
+    setItems(
+      items.map((itm) => {
         return { ...itm, packed: true };
       })
     );
   };
   const handleMarkAllInComplete = () => {
-    setItemText(
-      itemText.map((itm) => {
+    setItems(
+      items.map((itm) => {
         return { ...itm, packed: false };
       })
     );
   };
   const handleResetToInitials = () => {
-    setItemText(defaultItems);
+    setItems(defaultItems);
   };
   const handleRemoveAllItems = () => {
-    setItemText([]);
+    setItems([]);
   };
 
   const handleDeleteEachItem = (id) => {
-    setItemText((prev) => prev.filter((itm) => itm.id !== id));
+    setItems((prev) => prev.filter((itm) => itm.id !== id));
   };
 
   const handleItemToggle = (id) => {
-    const newItems = itemText.map((itm) => {
+    const newItems = items.map((itm) => {
       if (itm.id === id) {
         return {
           ...itm,
@@ -54,20 +54,20 @@ export default function ItemsContextProvider({ children }) {
       }
       return itm;
     });
-    setItemText(newItems);
+    setItems(newItems);
   };
 
   const handlePackedItems = () => {
-    return itemText.filter((itm) => itm.packed === true).length;
+    return items.filter((itm) => itm.packed === true).length;
   };
- 
+
   useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(itemText));
-  }, [itemText]);
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
   return (
     <ItemContext.Provider
       value={{
-        itemText,
+        items,
         handleAddItem,
         handleDeleteEachItem,
         handleItemToggle,

@@ -1,6 +1,7 @@
 import ReactSelect from "react-select";
 import EmptyView from "./EmptyView";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import { useItemsContext } from "../lib/hooks";
 const sortingOptions = [
   {
     label: "Sort by default",
@@ -17,10 +18,11 @@ const sortingOptions = [
 ];
 
 export default function ItemList() {
+  const { items } = useItemsContext();
   const [sortBy, setSortBy] = useState("default");
   const sortedItems = useMemo(
     () =>
-      [...itemText].sort((a, b) => {
+      [...items].sort((a, b) => {
         if (sortBy === "packed") {
           return b.packed - a.packed;
         } else if (sortBy === "unpacked") {
@@ -28,7 +30,7 @@ export default function ItemList() {
         }
         return;
       }),
-    [itemText, sortBy]
+    [items, sortBy]
   );
   return (
     <ul>
@@ -44,18 +46,14 @@ export default function ItemList() {
         </section>
       )}
       {sortedItems.map((item) => (
-        <ListItem
-          key={item.id}
-          item={item}
-          onDeleteEachItem={handleDeleteEachItem}
-          onToggleItem={handleItemToggle}
-        />
+        <ListItem key={item.id} item={item} />
       ))}
     </ul>
   );
 }
 
-function ListItem() {
+function ListItem({ item }) {
+  const { handleItemToggle, handleDeleteEachItem } = useItemsContext();
   return (
     <>
       <li className="item">
@@ -64,14 +62,14 @@ function ListItem() {
             type="checkbox"
             checked={item.packed}
             onChange={() => {
-              onToggleItem(item.id);
+              handleItemToggle(item.id);
             }}
           />
           {item.name}
         </label>
         <button
           onClick={() => {
-            onDeleteEachItem(item.id);
+            handleDeleteEachItem(item.id);
           }}
         >
           ❌

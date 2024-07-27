@@ -1,13 +1,11 @@
-import { useContext } from "react";
-import { ItemContext } from "../context/ItemsContextProvider";
+import { useItemsContext } from "../lib/hooks";
 
 export default function Counter() {
-  const { itemText } = useContext(ItemContext);
-  const totalPacked = itemText.filter((item) => item.packed === true);
+  const { handlePackedItems, items } = useItemsContext();
   return (
     <div className="counter">
       <b>
-        {totalPacked} / {itemText.length}
+        {handlePackedItems | 0} / {items.length}
       </b>{" "}
       items packed
     </div>

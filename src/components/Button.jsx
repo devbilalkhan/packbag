@@ -1,4 +1,4 @@
-export default function Button({ buttonType, children, onClick }) {
+export default function qButton({ buttonType, children, onClick }) {
   return (
     <button
       onClick={onClick}
