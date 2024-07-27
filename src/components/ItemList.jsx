@@ -1,25 +1,28 @@
-import { useState } from "react";
-import { defaultItems } from "../lib/constants";
-export default function ItemList() {
-  const [items, setItems] = useState(defaultItems);
+export default function ItemList({ itemText, setItemText }) {
   return (
     <ul>
-      {items.map((item) => (
-        <ListItem key={item.id} item={item} />
+      {itemText.map((item) => (
+        <ListItem key={item.id} item={item} setItemText={setItemText} />
       ))}
     </ul>
   );
 }
 
-function ListItem({ item }) {
+function ListItem({ item, setItemText }) {
   return (
     <>
       <li className="item">
         <label>
-          <input type="checkbox" checked={item.packed} />
+          <input type="checkbox" checked={item.packed} onChange={() => {}} />
           {item.name}
         </label>
-        <button onClick={() => {}}>❌</button>
+        <button
+          onClick={() =>
+            setItemText((prev) => prev.filter((itm) => itm.id !== item.id))
+          }
+        >
+          ❌
+        </button>
       </li>
     </>
   );
