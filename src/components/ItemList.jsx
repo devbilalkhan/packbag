@@ -16,11 +16,7 @@ const sortingOptions = [
   },
 ];
 
-export default function ItemList({
-  itemText,
-  handleDeleteEachItem,
-  handleItemToggle,
-}) {
+export default function ItemList() {
   const [sortBy, setSortBy] = useState("default");
   const sortedItems = useMemo(
     () =>
@@ -59,7 +55,7 @@ export default function ItemList({
   );
 }
 
-function ListItem({ item, onDeleteEachItem, onToggleItem }) {
+function ListItem() {
   return (
     <>
       <li className="item">

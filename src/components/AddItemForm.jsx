@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
 import Warning from "./Warning";
-export default function AddItemForm({ setItemText, onAddItem }) {
+export default function AddItemForm() {
   const [listItem, setListItem] = useState("");
   const [warning, setWarning] = useState("");
 

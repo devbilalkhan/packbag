@@ -1,11 +1,6 @@
 import Button from "./Button";
 
-export default function ButtonGroup({
-  onRemoveAllItems,
-  onResetToInitials,
-  onMarkAllComplete,
-  onMarkAllInComplete,
-}) {
+export default function ButtonGroup() {
   const buttons = [
     { onClick: onMarkAllComplete, label: "Mark all as complete" },
     { onClick: onMarkAllInComplete, label: "Mark all as incomplete" },

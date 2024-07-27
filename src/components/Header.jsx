@@ -1,14 +1,11 @@
 import Logo from "./Logo";
 import Counter from "./Counter";
 
-export default function Header({ numOfItems, handlePackedItemsTotal }) {
+export default function Header() {
   return (
     <header>
       <Logo />
-      <Counter
-        numOfItems={numOfItems}
-        onPackedItemsTotal={handlePackedItemsTotal}
-      />
+      <Counter />
     </header>
   );
 }
