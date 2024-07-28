@@ -1,7 +1,20 @@
 import { create } from "zustand";
 import { defaultItems } from "../lib/constants";
-create((set) => ({
+export const useItemStore = create((set) => ({
   items: defaultItems,
+  addItems: (newItemsText) => {
+    const newItems = {
+      id: new Date().now(),
+      name: newItemsText,
+      packed: false,
+    };
+
+    set((state) => {
+      return {
+        item: [...state, newItems],
+      };
+    });
+  },
   removeAllitems: () => {
     set(() => ({ items: [] }));
   },
@@ -49,7 +62,12 @@ create((set) => ({
       return { items: filteredItems };
     });
   },
-  handlePackedItems : () => {
-    return items.filter((itm) => itm.packed === true).length;
-  };
+  packedItems: () => {
+    set((state) => {
+      const filteredItem = state.filter((itm) => itm.packed === true).length;
+      return {
+        item: filteredItem,
+      };
+    });
+  },
 }));

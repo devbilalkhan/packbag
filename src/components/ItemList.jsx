@@ -1,7 +1,7 @@
 import ReactSelect from "react-select";
 import EmptyView from "./EmptyView";
-import { useContext, useMemo, useState } from "react";
-import { useItemsContext } from "../lib/hooks";
+import { useMemo, useState } from "react";
+import { useItemStore } from "../store/itemsStore";
 const sortingOptions = [
   {
     label: "Sort by default",
@@ -18,7 +18,7 @@ const sortingOptions = [
 ];
 
 export default function ItemList() {
-  const { items } = useItemsContext();
+  const { items } = useItemStore((state) => state.item);
   const [sortBy, setSortBy] = useState("default");
   const sortedItems = useMemo(
     () =>
@@ -53,7 +53,8 @@ export default function ItemList() {
 }
 
 function ListItem({ item }) {
-  const { handleItemToggle, handleDeleteEachItem } = useItemsContext();
+  const itemToggle = useItemStore((state) => state.itemToggle);
+  const deleteEachItem = useItemStore((state) => state.itemToggle);
   return (
     <>
       <li className="item">
@@ -62,14 +63,14 @@ function ListItem({ item }) {
             type="checkbox"
             checked={item.packed}
             onChange={() => {
-              handleItemToggle(item.id);
+              itemToggle(item.id);
             }}
           />
           {item.name}
         </label>
         <button
           onClick={() => {
-            handleDeleteEachItem(item.id);
+            deleteEachItem(item.id);
           }}
         >
           ❌

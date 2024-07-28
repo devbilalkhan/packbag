@@ -1,11 +1,12 @@
-import { useItemsContext } from "../lib/hooks";
+import { useItemStore } from "../store/itemsStore";
 
 export default function Counter() {
-  const { handlePackedItems, items } = useItemsContext();
+  const packedItems = useItemStore((state) => state.packedItems);
+  const items = useItemStore((state) => state.items);
   return (
     <div className="counter">
       <b>
-        {handlePackedItems | 0} / {items.length}
+        {packedItems | 0} / {items.length}
       </b>{" "}
       items packed
     </div>

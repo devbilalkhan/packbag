@@ -2,15 +2,15 @@ import { useRef, useState } from "react";
 import Button from "./Button";
 import Warning from "./Warning";
 
-import { useItemsContext } from "../lib/hooks";
+import { useItemStore } from "../store/itemsStore";
 
 export default function AddItemForm() {
-  const { handleAddItem } = useItemsContext();
+  const addItem = useItemStore((state) => state.addItem);
   const [listItem, setListItem] = useState("");
   const [warning, setWarning] = useState("");
 
   const inputRef = useRef();
-  const handleFormSubmit = (e) => {
+  const FormSubmit = (e) => {
     e.preventDefault();
 
     if (!listItem) {
@@ -18,11 +18,11 @@ export default function AddItemForm() {
       inputRef.current.focus();
       return;
     }
-    handleAddItem(listItem);
+    addItem(listItem);
     setListItem("");
   };
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={FormSubmit}>
       <h2>Add an item</h2>
       <input
         ref={inputRef}
