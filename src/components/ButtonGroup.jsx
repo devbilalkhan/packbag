@@ -7,6 +7,7 @@ export default function ButtonGroup() {
   const markAllInComplete = useItemStore((state) => state.markAllInComplete);
   const resetToInitials = useItemStore((state) => state.resetToInitials);
   const removeAllItems = useItemStore((state) => state.removeAllItems);
+
   const buttons = [
     { onClick: markAllComplete, label: "Mark all as complete" },
     { onClick: markAllInComplete, label: "Mark all as incomplete" },

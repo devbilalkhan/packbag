@@ -2,29 +2,33 @@ import { create } from "zustand";
 import { defaultItems } from "../lib/constants";
 export const useItemStore = create((set) => ({
   items: defaultItems,
-  addItems: (newItemsText) => {
+  addItem: (newItemText) => {
     const newItems = {
-      id: new Date().now(),
-      name: newItemsText,
+      id: new Date().getTime(),
+      name: newItemText,
       packed: false,
     };
 
     set((state) => {
       return {
-        item: [...state, newItems],
+        items: [...state.items, newItems],
       };
     });
   },
-  removeAllitems: () => {
-    set(() => ({ items: [] }));
+  removeAllItems: () => {
+    set(() => {
+      return {
+        items: [],
+      };
+    });
   },
 
-  resetToInitial: () => {
+  resetToInitials: () => {
     set(() => ({ items: defaultItems }));
   },
   itemToggle: (id) => {
     set((state) => {
-      const newItems = state.map((itm) => {
+      const newItems = state.items.map((itm) => {
         if (itm.id === id) {
           return {
             ...itm,
@@ -39,8 +43,8 @@ export const useItemStore = create((set) => ({
     });
   },
   markAllComplete: () => {
-    const newItems = set((state) => {
-      state.map((itm) => {
+    set((state) => {
+      const newItems = state.items.map((itm) => {
         return { ...itm, packed: true };
       });
       return {
@@ -50,7 +54,7 @@ export const useItemStore = create((set) => ({
   },
   markAllInComplete: () => {
     set((state) => {
-      const newItems = state.map((itm) => {
+      const newItems = state.items.map((itm) => {
         return { ...itm, packed: false };
       });
       return { items: newItems };
@@ -58,13 +62,15 @@ export const useItemStore = create((set) => ({
   },
   deleteEachItem: (id) => {
     set((state) => {
-      const filteredItems = state.filter((itm) => itm.id !== id);
+      const filteredItems = state.items.filter((itm) => itm.id !== id);
       return { items: filteredItems };
     });
   },
   packedItems: () => {
     set((state) => {
-      const filteredItem = state.filter((itm) => itm.packed === true).length;
+      const filteredItem = state.items.filter(
+        (itm) => itm.packed === true
+      ).length;
       return {
         item: filteredItem,
       };
